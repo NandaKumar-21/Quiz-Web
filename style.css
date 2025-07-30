@@ -214,22 +214,17 @@ body {
     font-weight: 500;
 }
 
-/* Question & Options */
-.question-card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.4;
-}
+/* Styles for Question Text and Code Snippets */
 #questionText, #hostQuestionText {
     white-space: pre-wrap; /* Preserves formatting for code */
     text-align: left; /* Aligns text to the left */
     font-family: 'Courier New', Courier, monospace; /* Ideal font for code */
-    font-size: 1.2rem; /* Default font size for larger screens */
-    line-height: 1.5;
-    background-color: white; /* Plain white background */
-    padding: 0;
-    border-radius: 0;
+    background-color: #f4f4f4; /* Light background for code block */
+    padding: 1rem; /* Default padding for larger screens */
+    border-radius: 8px; /* Rounds the corners */
     margin-bottom: 1.5rem;
+    font-size: 1.1rem; /* Default font size */
+    line-height: 1.4;
 }
 
 .options { display: grid; gap: 1rem; text-align: left;}
@@ -311,3 +306,46 @@ body {
     flex: 1;
 }
 .final-stats .stat h3 { font-size: 2.5rem; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    .container {
+        width: 100%;
+        padding: 10px;
+        flex-direction: column;
+    }
+    .quiz-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    .login-card, .waiting-card, .question-card, .results-card, .final-card, .host-panel {
+        padding: 1.5rem;
+    }
+    .host-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .quiz-controls {
+        flex-direction: column;
+    }
+    .leaderboard-item {
+        font-size: 0.9rem;
+    }
+
+    /* UPDATED: Smaller padding and font for question on mobile */
+    #questionText, #hostQuestionText {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Accessibility reductions */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0s !important;
+        transition-duration: 0s !important;
+    }
+}
