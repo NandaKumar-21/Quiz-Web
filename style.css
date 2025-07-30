@@ -221,12 +221,15 @@ body {
     line-height: 1.4;
 }
 #questionText, #hostQuestionText {
-  white-space: pre-wrap; /* Preserves formatting for code */
-  text-align: left; /* Aligns text to the left */
-  font-family: 'Courier New', Courier, monospace; /* Ideal font for code */
-  background-color: #f4f4f4; /* Light background for code block */
-  padding: 1rem; /* Adds some spacing */
-  border-radius: 8px; /* Rounds the corners */
+    white-space: pre-wrap; /* Preserves formatting for code */
+    text-align: left; /* Aligns text to the left */
+    font-family: 'Courier New', Courier, monospace; /* Ideal font for code */
+    font-size: 1.2rem; /* Default font size for larger screens */
+    line-height: 1.5;
+    background-color: white; /* Plain white background */
+    padding: 0;
+    border-radius: 0;
+    margin-bottom: 1.5rem;
 }
 
 .options { display: grid; gap: 1rem; text-align: left;}
