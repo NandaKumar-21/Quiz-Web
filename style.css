@@ -216,10 +216,17 @@ body {
 
 /* Question & Options */
 .question-card h2 {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin-bottom: 1.5rem;
     line-height: 1.4;
-    text-align:left;
+}
+#questionText, #hostQuestionText {
+  white-space: pre-wrap; /* Preserves formatting for code */
+  text-align: left; /* Aligns text to the left */
+  font-family: 'Courier New', Courier, monospace; /* Ideal font for code */
+  background-color: #f4f4f4; /* Light background for code block */
+  padding: 1rem; /* Adds some spacing */
+  border-radius: 8px; /* Rounds the corners */
 }
 
 .options { display: grid; gap: 1rem; text-align: left;}
