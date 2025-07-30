@@ -2,24 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TechQuiz Live 2025</title>
-
-  <!-- UI styles (unchanged) -->
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <div class="container">
 
-    <!-- ===== Login Screen ===== -->
-    <div id="loginScreen" class="screen">
+    <div id="choiceScreen" class="screen">
       <div class="login-card">
-        <div class="header">
-          <h1>TechQuiz Live 2025</h1>
-          <p>Welcome to the Technical Quiz Competition</p>
-        </div>
+        <div class="header"><h1>TechQuiz Live 2025</h1></div>
+        <button id="showParticipantLogin" class="btn btn-primary" style="margin-bottom:1rem">Join as Participant</button>
+        <button id="showHostLogin" class="btn btn-secondary">Host Login</button>
+      </div>
+    </div>
 
+    <div id="participantLoginScreen" class="screen hidden">
+      <div class="login-card">
+        <div class="header"><h2>Participant Login</h2></div>
         <form id="loginForm" class="login-form">
           <div class="form-group">
             <label for="teamId">Team Code (5 digits)</label>
@@ -27,53 +28,61 @@
           </div>
           <button type="submit" class="btn btn-primary">Join Quiz</button>
         </form>
-
-        <div class="host-switch">
-          <button id="hostModeBtn" class="btn btn-secondary">Switch to Host Dashboard</button>
-        </div>
+        <button id="backToChoiceP" class="btn btn-secondary" style="margin-top:2rem">Back</button>
       </div>
     </div>
 
-    <!-- ===== Host Dashboard ===== -->
+    <div id="hostLoginScreen" class="screen hidden">
+      <div class="login-card">
+        <div class="header"><h2>Host Login</h2></div>
+        <form id="hostLoginForm" class="host-login">
+          <input type="text" style="display:none" autocomplete="username"/>
+          <div class="form-group">
+            <label for="hostPassword">Host Password</label>
+            <input type="password" id="hostPassword" required placeholder="Enter host password" autocomplete="current-password" />
+          </div>
+          <button type="submit" class="btn btn-primary">Login as Host</button>
+        </form>
+        <button id="backToChoiceH" class="btn btn-secondary" style="margin-top:2rem">Back</button>
+      </div>
+    </div>
+
     <div id="hostScreen" class="screen hidden">
       <div class="host-panel">
         <div class="host-header">
           <h2>Host Dashboard</h2>
-          <button id="backToLoginBtn" class="btn btn-secondary">Back to Login</button>
+          <button id="logoutHostBtn" class="btn btn-secondary">Log Out</button>
         </div>
-
-        <!-- Host Login -->
-        <div id="hostLoginForm" class="host-login">
-          <div class="form-group">
-            <label for="hostPassword">Host Password</label>
-            <input type="password" id="hostPassword" required placeholder="Enter host password" />
-          </div>
-          <button id="hostLoginBtn" class="btn btn-primary">Login as Host</button>
-        </div>
-
-        <!-- Controls visible after host auth -->
-        <div id="hostControls" class="host-controls hidden">
+        <div id="hostControls" class="host-controls">
           <div class="quiz-stats">
             <div class="stat-card"><h3 id="participantCount">0</h3><p>Active Participants</p></div>
             <div class="stat-card"><h3 id="currentQuestionNum">0</h3><p>Current Question</p></div>
             <div class="stat-card"><h3 id="responsesCount">0</h3><p>Responses Received</p></div>
           </div>
-
+          <div class="question-card">
+            <h2 id="hostQuestionText">Waiting to start the quiz...</h2>
+            <div id="hostOptionsContainer" class="options"></div>
+          </div>
           <div class="quiz-controls">
             <button id="startQuizBtn" class="btn btn-success">Start Quiz</button>
             <button id="nextQuestionBtn" class="btn btn-primary hidden">Next Question</button>
             <button id="endQuizBtn" class="btn btn-danger hidden">End Quiz</button>
+            <button id="resetQuizBtn" class="btn btn-warning">Reset Quiz</button>
+            <button id="downloadReportBtn" class="btn btn-secondary">Download Leaderboard CSV</button>
+            <button id="downloadAttendeesBtn" class="btn btn-secondary">Download Attendees CSV</button>
           </div>
-
+          <div class="leaderboard-preview">
+            <h3>Leaderboard</h3>
+            <div id="hostLeaderboardList"></div>
+          </div>
           <div class="timer-display">
-            <div class="timer" id="hostTimer">00:60</div>
+            <div class="timer" id="hostTimer">01:00</div>
             <p>Time Remaining</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ===== Waiting Screen ===== -->
     <div id="waitingScreen" class="screen hidden">
       <div class="waiting-card">
         <div class="spinner"></div>
@@ -83,37 +92,33 @@
       </div>
     </div>
 
-    <!-- ===== Quiz Screen ===== -->
     <div id="quizScreen" class="screen hidden">
       <div class="quiz-header">
         <div class="question-counter">
-          Question <span id="questionNumber">1</span> of <span id="totalQuestions">5</span>
+          Question <span id="questionNumber">1</span> of <span id="totalQuestions">20</span>
         </div>
         <div class="timer" id="timer">01:00</div>
       </div>
-
       <div class="question-card">
         <h2 id="questionText">Loading question…</h2>
         <div class="options" id="optionsContainer"></div>
         <button id="submitAnswer" class="btn btn-primary" disabled>Submit Answer</button>
+        <div id="submissionNotice" style="margin-top: 1rem; font-weight: 500;"></div>
       </div>
     </div>
 
-    <!-- ===== Results Screen ===== -->
     <div id="resultsScreen" class="screen hidden">
       <div class="results-card">
         <h2>Question Results</h2>
         <div id="answerFeedback" class="feedback"></div>
-
         <div class="leaderboard-preview">
           <h3>Top Teams</h3>
           <div id="leaderboardList"></div>
         </div>
-        <p class="waiting-text">Waiting for next question…</p>
+        <p class="waiting-text">Waiting for the host to show the next question…</p>
       </div>
     </div>
 
-    <!-- ===== Final Screen ===== -->
     <div id="finalScreen" class="screen hidden">
       <div class="final-card">
         <h1>Quiz Complete!</h1>
@@ -121,27 +126,16 @@
           <div class="stat"><h3 id="teamFinalRank">#</h3><p>Final Rank</p></div>
           <div class="stat"><h3 id="teamFinalScore">0</h3><p>Total Score</p></div>
         </div>
-
         <div class="final-leaderboard">
           <h3>Final Leaderboard</h3>
           <div id="finalLeaderboardList"></div>
         </div>
-
         <div class="thank-you">
           <h3>Thank you for participating!</h3>
-          <p>Congratulations to all teams for your excellent performance.</p>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Firebase SDK (CDN modules) -->
-   <!-- Firebase App (Core SDK) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-
-<!-- Firestore SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
-
-<script type="module" src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
