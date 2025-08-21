@@ -15,7 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const TOTAL_QUESTIONS = 40;
-const QUESTION_TIMER = 60;
+const QUESTION_TIMER = 30;
 
 // --- STATE MANAGEMENT ---
 let localState = {
