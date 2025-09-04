@@ -295,7 +295,7 @@ function showResultsScreen(isCorrect, correctAnswer) {
         feedbackEl.innerHTML = `<strong>Correct!</strong> Your answer was submitted.`;
     } else {
         feedbackEl.className = 'feedback incorrect';
-        feedbackEl.innerHTML = `<strong>Incorrect.</strong> The correct answer was ${correctAnswer}.`;
+        feedbackEl.innerHTML = `<strong>Incorrect.</strong> Sorry, wrong answer `;
     }
 
     const leaderboardQuery = query(collection(db, 'participants'), orderBy('totalScore', 'desc'), orderBy('totalResponseTime', 'asc'));
